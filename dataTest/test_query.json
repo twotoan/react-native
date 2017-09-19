@@ -2,7 +2,6 @@
   "title": "The Basics - Networking",
   "description": "Your app fetched this from a remote endpoint!",
   "counties": [
-    [
       {
         "cu_id":9,
         "cu_name":"Cheshire"
@@ -382,6 +381,6 @@
       {
         "cu_id":106,
         "cu_name":"Outside UK"
-      }]
+      }
   ]
 }

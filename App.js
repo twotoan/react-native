@@ -16,7 +16,7 @@ export default class Movies extends Component {
                 let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
                 this.setState({
                     isLoading: false,
-                    dataSource: ds.cloneWithRows(responseJson.movies),
+                    dataSource: ds.cloneWithRows(responseJson.counties),
                 }, function() {
                     // do something with new state
                 });
