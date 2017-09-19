@@ -1,66 +1,47 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { ActivityIndicator, ListView, Text, View } from 'react-native';
 
-class Blink extends Component {
+export default class Movies extends Component {
     constructor(props) {
         super(props);
-        this.state = {showText: true};
+        this.state = {
+            isLoading: true
+        }
+    }
 
-        // Toggle the state every second
-        setInterval(() => {
-            this.setState(previousState => {
-                return { showText: !previousState.showText };
+    componentDidMount() {
+        return fetch('https://facebook.github.io/react-native/movies.json')
+            .then((response) => response.json())
+            .then((responseJson) => {
+                let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+                this.setState({
+                    isLoading: false,
+                    dataSource: ds.cloneWithRows(responseJson.movies),
+                }, function() {
+                    // do something with new state
+                });
+            })
+            .catch((error) => {
+                console.error(error);
             });
-        }, 10000);
     }
-    render() {
-        let display = this.state.showText ? this.props.text : ' ';
-        return (
-          <View style={styles.container}>
-            <Text>{display}</Text>
-          </View>
-        );
-    }
-}
 
-export default class BlinkApp extends Component {
     render() {
-        let pic = { uri: 'http://placehold.it/200x200' };
+        if (this.state.isLoading) {
+            return (
+                <View style={{flex: 1, paddingTop: 20}}>
+                    <ActivityIndicator />
+                </View>
+            );
+        }
+
         return (
-            <View style={styles.container}>
-              <View style={styles.header}>
-                <Image source={pic} style={{width: 250, height: 250}} />
-              </View>
-              <View style={styles.content}>
-                <Blink text='I love to blink' />
-                <Blink text='Yes blinking is so great' />
-                <Blink text='Why did they ever take this out of HTML' />
-                <Blink text='Look at me look at me look at me' />
-              </View>
-              <View style={styles.footer}>
-                <Text>Footer Text</Text>
-              </View>
+            <View style={{flex: 1, paddingTop: 20}}>
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(rowData) => <Text>{rowData.title}, {rowData.releaseYear}</Text>}
+                />
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        display: 'flex',
-        flex: 1,
-        backgroundColor: '#fff',
-    },
-    header: {
-        backgroundColor: '#ccc',
-        flex: 1,
-    },
-    content: {
-        backgroundColor: 'powderblue',
-        flex: 2,
-    },
-    footer: {
-        backgroundColor: 'steelblue',
-        flex: 3,
-    }
-});
