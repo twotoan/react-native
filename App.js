@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Button, TextInput, Text, Image } from 'react-native';
 
+const resizeMode = 'cover';
+
 export default class App extends Component {
     render() {
         return (
             <View style={styles.content}>
-                <Header></Header>
-                <Login></Login>
-                <Footer></Footer>
+                <Image style={{flex: 1,resizeMode}} source={{ uri: "./images/galaxy-wallpaper-30.jpg" }}>
+                    <Header></Header>
+                    <Login></Login>
+                    <Footer></Footer>
+                </Image>
             </View>
         )
     }
@@ -52,46 +56,34 @@ export class Footer extends Component {
     }
 }
 
-export class BackgroundImage extends Component {
-    render() {
-        const resizeMode = 'cover';
-
-        return (
-            <Image
-                style={{
-                    flex: 1,
-                    resizeMode,
-                }}
-                source={{ uri: "./images/galaxy-wallpaper-30.jpg" }}
-            />
-        );
-    }
-}
-
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: '#00A2B2',
         padding: 20,
         textAlign: 'center',
     },
     content: {
-        backgroundColor: '#FFCEAA',
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'space-between',
     },
     buttonStyle: {
-        backgroundColor: '#B24B00',
+        borderWidth:1,
+        borderColor:'rgba(0,0,0,0.2)',
+        alignItems:'center',
+        justifyContent:'center',
+        width:100,
+        height:100,
+        backgroundColor:'#fff',
+        borderRadius:100,
     },
     footer: {
-        backgroundColor: '#19EAFF',
         padding: 20,
         textAlign: 'center',
     },
     input: {
         margin: 20,
         textAlign: 'center',
-        backgroundColor: '#ccc',
+        backgroundColor: '#FFF',
         padding: 20,
     }
 });
